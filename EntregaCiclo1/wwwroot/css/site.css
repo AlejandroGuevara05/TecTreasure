@@ -1,0 +1,56 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.azulSorteosTec{
+    background-color: #22327B;
+}
+
+.altura_Encabezado_Pie{
+    height: 75px;
+}
+
+.altura_Pie {
+    height: 10%;
+    border: 1px solid #FFFFFF;
+}
+
+/* Carrito compras */
+.navbar .d-flex.justify-content-end {
+    margin-left: auto;
+}
+
+.navbar a img {
+    max-height: 40px; /* Ajusta esto según tus necesidades */
+}
+
+.carrito-compra {
+    width: 31px; /* 50% del tamaño original si era 50px */
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+#carrito-container {
+    position: relative;
+}
+
+#contador-carrito {
+    position: absolute;
+    top: 14px;
+    right: -10px; /* Ajusta la posición horizontal según tu preferencia */
+    background-color: white; /* Cambia el color de fondo del contador */
+    color: black; /* Cambia el color del número del contador */
+    padding: 3px 5px; /* Ajusta el espaciado interior del contador */
+    border-radius: 80%; /* Hace que el contador tenga forma de círculo */
+    font-size: 12px; /* Ajusta el tamaño de fuente del número del contador */
+}

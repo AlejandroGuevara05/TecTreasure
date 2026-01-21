@@ -1,0 +1,50 @@
+﻿@page
+@model InicioAdmins
+@{
+    ViewData["Title"] = "Inicio de Sesión Admins";
+    Layout = "_Layout";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/InicioAdmins.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+    /* Estilo personalizado para el botón */
+    .btn-custom {
+        background-color: #22327b; /* Color de fondo personalizado */
+        color: #ffffff; /* Color del texto */
+    }
+</style>
+
+
+<div class="container mt-5" style="margin-top: 5%">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4>Inicio de Sesión - Administradores</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" autocomplete="off">
+                        <div class="form-group">
+                            <label for="usuario_nombre">Usuario</label>
+                            <input type="text" class="form-control" id="admin_matricula" asp-for="admin_matricula" placeholder="Introduce tu usuario">
+                        </div>
+                        <div class="form-group">
+                            <label for="usuario_contrase">Contraseña</label>
+                            <input type="password" class="form-control" id="admin_contrase" asp-for="admin_contrase" placeholder="Introduce tu contraseña">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-custom btn-block">Ingresar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="div_mensaje">
+    <p class="text-danger text-center">@ViewData["Mensaje"]</p>
+</div>

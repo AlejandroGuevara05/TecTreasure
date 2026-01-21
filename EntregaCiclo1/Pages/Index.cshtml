@@ -1,0 +1,113 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Inicio de Sesión";
+    Layout = "_Layout";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/Index.css" />
+    <!-- Agregando Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        overflow: hidden;
+    }
+
+    .login-container {
+        max-width: 400px;
+        margin: auto;
+        margin-top: 5%;
+        padding: 20px;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-custom {
+        background-color: #22327b;
+        color: #FFFFFF;
+        border: 3px solid #22327b;
+        border-radius: 20px;
+    }
+
+    .btn-custom-2 {
+        background-color: #FFFFFF;
+        color: #22327b;
+        border: 3px solid #22327b;
+        border-radius: 20px;
+    }
+
+        .btn-custom:hover,
+        .btn-custom:focus,
+        .btn-custom-2:hover,
+        .btn-custom-2:focus {
+            color: #00B6FF !important;
+        }
+
+    .admin-link {
+        text-align: center;
+        text-decoration: underline;
+        color: #257AF4;
+    }
+
+    .text-chico {
+        font-size: 14px;
+    }
+</style>
+
+<body>
+    <div class="login-container">
+        <h3 class="text-center">Inicia sesión</h3>
+        <p class="text-center text-chico">Ingresa con tu correo o regístrate si aún no has creado una cuenta</p>
+
+        <p class="text-danger text-center">@ViewData["Resultado"]</p>
+
+        <form method="post" autocomplete="off">
+            <div class="form-group">
+                <input type="text" class="form-control" id="correo_usuario" asp-for="correo_usuario" placeholder="Correo electrónico">
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-control" id="contrasena_usuario" asp-for="contrasena_usuario" placeholder="Contraseña">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-custom btn-block">Iniciar sesión</button>
+                </div>
+                <div class="form-group col-md-6">
+                    <a asp-area="" asp-page="/Registro" class="btn btn-custom-2 btn-block">Registrarse</a>
+                </div>
+            </div>
+        </form>
+
+        <div class="admin-link">
+            <a asp-area="" asp-page="/InicioAdmins">Soy Administrador</a>
+        </div>
+    </div>
+</body>
+
+@if (Model.cuentaCreada == true)
+{
+    <script>// Llama a la función cuando la página se carga
+        document.addEventListener("DOMContentLoaded", function () {
+            mostrarNotificacion();
+        });</script>
+}
+
+@section scripts {
+    <script>function mostrarNotificacion() {
+            Swal.fire({
+                title: "¡Cuenta creada!",
+                icon: "success",
+                timer: 3000,
+                showConfirmButton: false
+            });
+        }</script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+}

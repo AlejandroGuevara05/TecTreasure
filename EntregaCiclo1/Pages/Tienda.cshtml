@@ -1,0 +1,75 @@
+﻿@page
+@model EntregaCiclo1.Pages.TiendaModel
+@{
+    ViewData["Title"] = "Tienda de Cofres";
+    Layout = "_LayoutPaginaSorteosTec";
+}
+
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container mt-4">
+    <div class="row">
+        @{
+            var cofres = new[]
+            {
+        new { Color = "#814A97", Imagen = "imagen1.png", idLootbox = 1 },
+        new { Color = "#CC1046", Imagen = "imagen2.png", idLootbox = 2 },
+        new { Color = "#EF7F06", Imagen = "imagen3.png", idLootbox = 3 },
+        new { Color = "#2A884F", Imagen = "imagen4.png", idLootbox = 4 },
+        new { Color = "#CF11A6", Imagen = "imagen5.png", idLootbox = 5 },
+        new { Color = "#04C0B3", Imagen = "imagen6.png", idLootbox = 6 },
+        new { Color = "#3AAA35", Imagen = "imagen7.png", idLootbox = 7 },
+        new { Color = "#009FDF", Imagen = "imagen8.png", idLootbox = 8 }
+        };
+        }
+
+        @foreach (var cofre in cofres)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card text-center" style="background-color: @cofre.Color;">
+                    <img src="~/Images/chest_1.png" class="card-img-top" alt="Cofre">
+                    <div class="card-body">
+                        <img src="~/Images/@cofre.Imagen" class="card-title" alt="Nombre del Cofre">
+                        <form method="post" id="@cofre.idLootbox">
+                            <input type="hidden" name="lootboxSeleccionada" value="@cofre.idLootbox" />
+                            <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@if (Model.lootboxAgregadaACarrito == true)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            mostrarNotificacion();
+        });
+    </script>
+}
+
+<script>function mostrarNotificacion() {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+    Toast.fire({
+        icon: "success",
+        title: "Agregado al carrito"
+    });
+    }</script>
+
+<!-- Opcional: Enlaces a Bootstrap JS, en caso de necesitar funcionalidades de JavaScript -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

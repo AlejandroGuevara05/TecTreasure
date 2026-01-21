@@ -1,0 +1,11 @@
+# MacOS
+.DS_Store
+
+# Automatically generated
+.vs
+bin
+obj
+
+# App Web Libraries
+EntregaCiclo1/wwwroot/lib
+EntregaCiclo1/wwwroot/images

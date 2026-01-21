@@ -1,7 +1,0 @@
-# MacOS
-.DS_Store
-
-# Automatically generated
-.vs
-bin
-obj

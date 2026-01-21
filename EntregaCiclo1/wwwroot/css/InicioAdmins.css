@@ -1,0 +1,17 @@
+﻿.div_mensaje {
+    min-height: 5%;
+    max-height: 5%;
+    text-align: center;
+    color: #C6163E;
+    font-size: 13px;
+    margin-top: 1%;
+}
+
+.btn-custom:hover,
+.btn-custom:focus {
+    color: #00B6FF !important;
+}
+
+body {
+    overflow: hidden;
+}

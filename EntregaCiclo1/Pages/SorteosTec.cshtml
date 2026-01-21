@@ -1,0 +1,35 @@
+﻿@page
+@model EntregaCiclo1.Pages.SorteosTecModel
+@{
+    ViewData["Title"] = "Sorteos Tec";
+    Layout = "_LayoutPaginaSorteosTec";
+}
+
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+    /* Asegura que la imagen ocupe todo el espacio vertical y horizontal disponible */
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .container-full {
+        height: calc(100vh - 56px); /* Ajusta 56px a la altura de tu navbar */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .full-page-image {
+        width: 100vw; /* Ajusta al ancho completo de la ventana */
+        height: 100%; /* Ajusta al alto completo del contenedor */
+        object-fit: cover; /* Cubre el área sin perder las proporciones */
+    }
+</style>
+
+<div class="container-full">
+    <img src="~/images/paginaWeb_sorteosTec.png" alt="Sorteos Tec" class="full-page-image" />
+</div>

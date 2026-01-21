@@ -1,0 +1,331 @@
+﻿@page
+@model EntregaCiclo1.Pages.LootboxesModel
+@{
+    ViewData["Title"] = "Mis Lootboxes";
+    Layout = "_LayoutPaginaSorteosTec";
+
+}
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap -->
+    <link rel="stylesheet" href="/css/Lootboxes.css" />
+
+    <style>
+
+        .titulo-pag {
+            margin-top: 3%;
+            width: 100%;
+            border-bottom: 1px solid #DFDFDF;
+            padding: 1%;
+        }
+
+        .btn-pagina-vacia {
+            background-color: #22327b;
+            color: #FFFFFF;
+            margin-top: 1%;
+        }
+
+        .btn-pagina-vacia:hover,
+        .btn-pagina-vacia:focus {
+            color: #00B6FF !important;
+        }
+
+        .lootbox-container-izquierda {
+            max-width: 45%;
+            max-height: 35%;
+            margin-top: 3%;
+            border: 2px solid #000000;
+            display: inline-block;
+            border-radius: 5px;
+        }
+
+        .lootbox-container-derecha {
+            max-width: 45%;
+            max-height: 35%;
+            margin-top: 3%;
+            border: 2px solid #000000;
+            display: inline-block;
+            float: right;
+            border-radius: 5px;
+        }
+
+        .div-titulo-lootbox {
+            background-color: #BCDEFF;
+            padding: 2%;
+            text-align: center;
+            width: 100%;
+            height: 20%;
+            border-bottom: 2px solid #000000;
+        }
+
+        .div-centro {
+            width: 100%;
+            height: 60%;
+            display: flex;
+        }
+
+        .left-section {
+            max-width: 50%;
+            max-height: 100%;
+            border-right: 2px solid #000000;
+        }
+
+        .right-section {
+            position: relative;
+            width: 50%;
+            padding-bottom: 50%;
+        }
+
+        .div-boton {
+            width: 100%;
+            height: 20%;
+            border-top: 2px solid #000000;
+            background-color: #BCDEFF;
+            text-align: center;
+            padding: 3%;
+        }
+
+        .animacion {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .imagen {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            object-fit: cover;
+        }
+
+        .imagen4 { /*clase para imagenes de tipo Boleto*/
+            top: 0;
+            left: 0;
+            background-color: #EDD524;
+        }
+
+        .imagen3 { /*clase para imagenes de tipo Descuento*/
+            top: 0;
+            right: 0;
+            background-color: #7209CA;
+        }
+
+        .imagen1 { /*clase para imagenes de tipo Skin*/
+            bottom: 0;
+            left: 0;
+            background-color: #091DCA;
+        }
+
+        .imagen2 { /*clase para imagenes de tipo Objeto de Casa*/
+            bottom: 0;
+            right: 0;
+            background-color: #B1B2B8;
+        }
+
+        .btn-custom {
+            background-color: #22327b;
+            color: #FFFFFF;
+            width: 40%;
+            border-radius: 20px;
+        }
+
+        .btn-custom:hover,
+        .btn-custom:focus {
+            color: #00B6FF !important;
+        }
+
+        .close {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+@{
+    string nombreCompleto = Model.usuarioNombre;
+    string nombreCompletov2 = nombreCompleto.Trim('"');
+    string[] partes = nombreCompletov2.Split(' ');
+    string primerNombre = partes[0];
+}
+
+<div class="titulo-pag">
+    <h2 class="text-center" style="margin-bottom:0">Bienvenid&#64; @primerNombre</h2>
+</div>
+
+@{
+    @if (!Model.LootboxesUsuario.Any())
+    {
+        <div class="text-center" style="margin-top: 10%">
+            <h4> ¡No tienes ninguna lootbox para abrir! </h4>
+            <button class="btn btn-pagina-vacia" onclick="window.location.href='@Url.Page("/Tienda")'">Comprar Lootboxes</button>
+        </div>
+    }
+    else {
+    int contador = 0;
+    foreach (var lootbox in Model.LootboxesUsuario)
+    {
+        contador = contador + 1;
+        <div class="lootbox-container @(contador % 2 == 0 ? "lootbox-container-derecha" : "lootbox-container-izquierda")">
+            <div class="div-titulo-lootbox">
+                <h3>Lootbox: @lootbox.nombre</h3>
+            </div>
+            <div class="div-centro">
+                <div class="left-section">
+                    @if (Model.DicActivarAnimacion.ContainsKey(contador) && Model.DicActivarAnimacion[contador] == false)
+                    {
+                        <img src="/images/lootboxInicial.jpeg" alt="Abrir Lootbox 1" class="animacion">
+                    }
+                    @if (Model.nuevoDiccionario.ContainsKey(contador) && Model.nuevoDiccionario[contador] == true)
+                    {
+                        <img id="lootbox-animation-fin2@(contador)" src="/images/lootboxFinal.jpg" alt="Abrir Lootbox 3" class="animacion">
+                    }
+                    else if (Model.DicActivarAnimacion.ContainsKey(contador) && Model.DicActivarAnimacion[contador] == true && Model.nuevoDiccionario[contador] == false)
+                    {
+                        <img id="lootbox-animation@(contador)" src="/images/lootboxAnimation.gif" alt="Abrir Lootbox 2" class="animacion">
+                        <img id="lootbox-animation-fin@(contador)" src="/images/lootboxFinal.jpg" alt="Abrir Lootbox 3" class="animacion">
+                        Model.IngresarDato(contador);
+                    }
+                </div>
+                <div class="right-section">
+                    @foreach (var item in Model.Items)
+                    {
+                        if (item.id_lootbox == lootbox.id)
+                        {
+                            <img src="/images/item@(item.id).png" alt="Item @(item.id)" class="imagen imagen@(item.id_tipo)">
+                        }
+                    }
+                </div>
+            </div>
+            <div class="div-boton">
+                <form method="post" id="@(contador)">
+                    <input type="hidden" name="lootboxId" value="@contador" />
+                    <button id="abrirBtn@(contador)" type="submit" class="btn btn-custom boton-bloqueable">Abrir Lootbox</button>
+                </form>
+            </div>
+        </div>
+
+        @if (Model.premio != null)
+        {
+            <div class="modal fade" id="ventanaEmergente@(contador)" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <!-- Encabezado de la ventana modal -->
+                        <div class="modal-header">
+                            <h4 class="modal-title w-100 text-center">@(Model.premio.tipo) : @(Model.premio.nombre)</h4>
+                            <span id="cerrarVentana@(contador)" class="close">&times;</span>
+                        </div>
+
+                        <!-- Contenido de la ventana modal -->
+                        <div class="modal-body text-center">
+                            <img src="/images/item@(Model.premio.id).png" alt="Premio Lootbox" style="width:30%">
+                        </div>
+
+                        <!-- Pie de la ventana modal -->
+                        <div class="modal-footer">
+                            <p class="mx-auto" id="modalTexto">@(Model.premio.descrip)</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="modal fade" id="ventanaEmergente@(contador)" aria-hidden="true">
+                <div class="modal-dialog" style="margin-top:15%">
+                    <div class="modal-content">
+                        <!-- Encabezado de la ventana modal -->
+                        <div class="modal-header">
+                            <h4 class="modal-title w-100 text-center">ERROR</h4>
+                            <span id="cerrarVentana@(contador)" class="close">&times;</span>
+                        </div>
+
+                        <!-- Contenido de la ventana modal -->
+                        <div class="modal-body text-center">
+                            <h5 class="mx-auto">Ha ocurrido un error para abrir la Lootbox @lootbox.nombre</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    }
+}
+
+<audio id="miEfectoDeSonido">
+    <source src="/images/ganarItem.mp3" type="audio/mp3">
+</audio>
+
+@section scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            @for (int i = 1; i <= Model.LootboxesUsuario.Count; i++)
+                {
+                <text>
+                    var lootboxAnimation@(i) = document.getElementById('lootbox-animation@(i)');
+                    var lootboxAnimationFin@(i) = document.getElementById('lootbox-animation-fin@(i)');
+                    var cerrarModal@(i) = document.getElementById('cerrarVentana@(i)');
+
+                    if (lootboxAnimation@(i)) {
+                        // Mostrar la sección inicialmente
+                        lootboxAnimation@(i).style.display = 'block';
+                        lootboxAnimationFin@(i).style.display = 'none';
+                        bloquearBotones()
+
+                        // Reiniciar la animación del GIF
+                        lootboxAnimation@(i).src = lootboxAnimation@(i).src;
+
+                        // Ocultar la sección después de cierto tiempo (por ejemplo, 3 segundos)
+                        setTimeout(function () {
+                                lootboxAnimation@(i).style.display = 'none';
+                                lootboxAnimationFin@(i).style.display = 'block';
+
+                                var modal = new bootstrap.Modal(document.getElementById('ventanaEmergente@(i)'));
+                                modal.show();
+                                reproducirEfectoDeSonido()
+                                desbloquearBotones()
+
+                                cerrarModal@(i).addEventListener('click', function () {
+                                    modal.hide();
+                                });
+                        }, 2650); // milisegundos
+                    }
+                </text>
+                }
+        });
+    </script>
+
+    <script>function reproducirEfectoDeSonido() {
+            var miEfectoDeSonido = document.getElementById('miEfectoDeSonido');
+            miEfectoDeSonido.play();
+        }
+    </script>
+
+    <script>function bloquearBotones() {
+            var botones = document.getElementsByClassName('boton-bloqueable');
+            for (var i = 0; i < botones.length; i++) {
+                botones[i].disabled = true;
+            }
+    }
+    </script>
+
+    <script>function desbloquearBotones() {
+            var botones = document.getElementsByClassName('boton-bloqueable');
+            for (var i = 1; i <= botones.length; i++) {
+                var lootboxAnimationFin = document.getElementById('lootbox-animation-fin' + i);
+                var lootboxAnimationFin2 = document.getElementById('lootbox-animation-fin2' + i);
+                if (lootboxAnimationFin || lootboxAnimationFin2) {
+                    botones[i-1].disabled = true;
+                }
+                else {
+                    botones[i-1].disabled = false;
+                }
+            }
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+} 
