@@ -1,5 +1,5 @@
 ﻿using System;
-namespace EjemploServicioREST.Model
+namespace ServiceREST.Model
 {
     public class Usuarios
     {

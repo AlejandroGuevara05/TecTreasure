@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "EjemploServicioREST": {
+    "ServiceREST": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

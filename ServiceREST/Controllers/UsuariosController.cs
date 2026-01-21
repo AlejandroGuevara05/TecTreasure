@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using EjemploServicioREST.Model;
+using ServiceREST.Model;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 
-namespace EjemploServicioREST.Controllers
+namespace ServiceREST.Controllers
 {
     [Route("entidades/[controller]")]
     public class UsuariosController : Controller
