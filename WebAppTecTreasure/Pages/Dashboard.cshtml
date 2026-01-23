@@ -1,0 +1,227 @@
+﻿@page
+@model WebAppTecTreasure.Pages.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_LayoutAlternativo";
+}
+
+@using Newtonsoft.Json;
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/Dashboard.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Incluye Chart.js -->
+</head>
+
+<style>
+    .btn-custom {
+        background-color: #FFFFFF;
+        color: #22327b;
+        border: 3px solid #22327b;
+    }
+
+        .btn-custom:hover,
+        .btn-custom:focus {
+            color: #00B6FF !important;
+        }
+
+    table, button {
+        max-width: 75%;
+        margin: auto;
+    }
+
+    .table-rayado tbody tr:nth-of-type(even) {
+        background-color: #BCDEFF; /* color para filas impares */
+    }
+
+    .table thead th {
+        background-color: #22327b; /* color del encabezado */
+        color: #ffffff; /* color del texto del encabezado */
+    }
+
+    .table th, .table td {
+        text-align: center; /* alinea el texto al centro de las celdas */
+    }
+</style>
+
+
+<br>
+<br>
+<!-- Tabla estados-->
+<!-- Título para la tabla de Porcentaje de usuarios por estado -->
+<div class="row">
+    <div class="col-md-12">
+        <!-- Ajusta las clases según tus necesidades -->
+        <h3 class="text-center">Porcentaje de Usuarios por Estado</h3>
+        <table class="table table-rayado">
+            <thead>
+                <tr>
+                    <th>Estado</th>
+                    <th>Cantidad de Usuarios</th>
+                    <th>Porcentaje del Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var estado in @Model.EstadosConConteo)
+                {
+                    <tr>
+                        <td>@estado.Key</td>
+                        <td>@estado.Value</td>
+                        <td>@(Model.TotalUsuarios > 0 ? (estado.Value * 100 / Model.TotalUsuarios).ToString("0.00") + "%" : "0%")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Porcentaje de compras -->
+<div class="text-center" style="margin-top: 80px;">
+    <h3>Porcentaje de Compras</h3>
+    <table class="table table-rayado">
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Usuarios que Realizan Compras</td>
+                <td>@Model.PorcentajeCompras %</td>
+            </tr>
+            <tr>
+                <td>Usuarios que No Realizan Compras</td>
+                <td>@(100 - Model.PorcentajeCompras) %</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="text-center">
+    <h3>Rango de Edades de los Usuarios</h3>
+    <canvas id="rangoEdadesGrafico"></canvas>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="row">
+    <!-- Columna izquierda para la tabla -->
+    <div class="col-md-6 d-flex justify-content-center align-items-center">
+        <div>
+            <h3 class="text-center">Porcentajes de Usuarios por Sexo</h3>
+            <table class="table table-rayado">
+                <thead>
+                    <tr>
+                        <th>Sexo</th>
+                        <th>Cantidad</th>
+                        <th>Porcentaje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.PorcentajesPorSexo)
+                    {
+                        <tr>
+                            <td>@item.sexo</td>
+                            <td>@item.conteo</td>
+                            <td>@item.porcentaje %</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Columna derecha para el gráfico de círculo -->
+    <div class="col-md-6">
+        <h3 class="text-center">Distribución de Usuarios por Sexo</h3>
+        <div class="text-center">
+            <canvas id="genderPieChart" width="50" height="50"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<!-- grafica ciruclo sexo -->
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('genderPieChart').getContext('2d');
+            var genderPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: @Html.Raw(JsonConvert.SerializeObject(Model.PorcentajesPorSexo.Select(x => x.sexo))),
+                    datasets: [{
+                        label: 'Porcentaje por Sexo',
+                        data: @Html.Raw(JsonConvert.SerializeObject(Model.PorcentajesPorSexo.Select(x => x.porcentaje))),
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)', // Rosado para "Femenino"
+                            'rgba(54, 162, 235, 0.2)', // Azul para "Masculino"
+                            'rgba(75, 192, 192, 0.2)'  // Verde para "Otro"
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',   // Rosado para "Femenino"
+                            'rgba(54, 162, 235, 1)',   // Azul para "Masculino"
+                            'rgba(75, 192, 192, 1)'    // Verde para "Otro"
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Distribución por Sexo'
+                        }
+                    }
+                }
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('rangoEdadesGrafico').getContext('2d');
+            var rangoEdadesGrafico = new Chart(ctx, {
+                type: 'bar', // o 'line', 'pie', etc., dependiendo del tipo de gráfico que prefieras
+                data: {
+                    labels: @Html.Raw(Json.Serialize(Model.RangosDeEdadConConteo.Keys)),
+                    datasets: [{
+                        label: 'Cantidad de Usuarios',
+                        data: @Html.Raw(Json.Serialize(Model.RangosDeEdadConConteo.Values)),
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.2)',
+                            // ... otros colores para cada barra ...
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            // ... otros colores para el borde de cada barra ...
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}

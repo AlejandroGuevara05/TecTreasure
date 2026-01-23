@@ -1,0 +1,32 @@
+﻿@page
+@model WebAppTecTreasure.Pages.VideojuegoModel
+@{
+    ViewData["Title"] = "TecTreasure";
+    Layout = "_LayoutPaginaSorteosTec";
+}
+
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+    .game-image-container {
+        display: flex; /* Utiliza flexbox para facilitar la alineación */
+        flex-direction: column; /* Los elementos hijos se alinearán verticalmente */
+        justify-content: center; /* Centra los elementos hijos verticalmente en el contenedor */
+        align-items: center; /* Centra los elementos hijos horizontalmente en el contenedor */
+        height: calc(100vh - 56px); /* Altura total de la ventana menos la altura del navbar */
+        margin-top: -50px; /* Ajusta este valor para subir la imagen */
+    }
+
+    .game-image {
+        max-width: 100%; /* Máximo ancho del contenedor */
+        max-height: 100%; /* Máximo altura del contenedor */
+        object-fit: contain; /* Asegura que la imagen se ajuste dentro del contenedor sin cortarse */
+    }
+</style>
+
+<div class="game-image-container">
+    <img src="~/images/tectreasure.jpg" alt="TecTreasure" class="game-image" />
+</div>
+

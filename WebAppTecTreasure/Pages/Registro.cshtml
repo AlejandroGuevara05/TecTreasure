@@ -1,0 +1,262 @@
+﻿@page
+@model WebAppTecTreasure.Pages.RegistroModel
+@{
+    ViewData["Title"] = "Registrarse";
+    Layout = "_Layout";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Agregando Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Agregando Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+    /* Estilo personalizado para el botón */
+    .btn-custom {
+        background-color: #22327b; /* Color de fondo personalizado */
+        color: #ffffff; /* Color del texto */
+        border-radius: 20px;
+    }
+
+        .btn-custom:hover,
+        .btn-custom:focus {
+            color: #00B6FF !important;
+        }
+
+    .form-group a {
+        text-decoration: underline;
+    }
+
+    .img-container {
+        position: relative;
+        right: 0;
+        width: 50%;
+        height: 75vh;
+        display: flex;
+        justify-content: right;
+        align-items: center;
+    }
+
+    .img-formulario {
+        max-width: 65%;
+        max-height: 65%;
+    }
+
+    .texto-checkbox {
+        white-space: nowrap; /* no saltos de linea */
+        overflow: visible; /* si no cabe que se muestre aún así */
+    }
+
+    .quitarEspacio {
+        margin-bottom: 0;
+    }
+
+    .campo-incorrecto {
+        border: 1px solid red;
+    }
+
+    .div-campo-entrada {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+    }
+
+    .warning-icono {
+        margin-left: 5px;
+    }
+
+    .mensaje-error {
+        font-size: 85%;
+        font-style: italic;
+        margin-top: 0;
+        color: #747474;
+    }
+
+    .mensaje-error-checkbox {
+        font-size: 85%;
+        font-style: italic;
+        color: red;
+        margin: 0;
+    }
+</style>
+
+<h2>Crea tu cuenta</h2>
+<p>Para brindarte mayor seguridad durante tu experiencia, crea una cuenta llenando todos los datos requeridos.</p>
+
+<div class="row form-group col-md-12">
+    <div class="col-md-6">
+        <form method="post" autocomplete="off">
+
+            <div class="form-group">
+                <div class="texto-checkbox">
+                    <input type="checkbox" id="confirmacion_edad" asp-for="confirmacion_edad">
+                    <label for="confirmacion_edad" style="margin:0">Confirmo que soy mayor de 18 años y los datos registrados son iguales a mi INE</label>
+                </div>
+                <span asp-validation-for="confirmacion_edad" class="mensaje-error-checkbox"> </span>
+            </div>
+
+            <div>
+
+                <div class="form-group">
+                    <label class="quitarEspacio" for="nombre_registro">Nombre</label>
+                    <div class="div-campo-entrada">
+                        <input type="text" class="form-control @(ViewData.ModelState.GetFieldValidationState("nombre_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid ? "campo-incorrecto" : " ")" id="nombre_registro" asp-for="nombre_registro" placeholder="Introduce tu nombre">
+                        @if (ViewData.ModelState.GetFieldValidationState("nombre_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid)
+                        {
+                            <i class="fa fa-exclamation-circle warning-icono" style="color: #BB0F2A "></i>
+                        }
+                    </div>
+                    <span asp-validation-for="nombre_registro" class="mensaje-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="quitarEspacio" for="sexo_registro">Sexo</label>
+                    <div class="div-campo-entrada">
+                        <select class="form-control @(ViewData.ModelState.GetFieldValidationState("sexo_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid ? "campo-incorrecto" : " ")" asp-for="sexo_registro" id="sexo_registro">
+                            <option value="">Selecciona tu sexo</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                        @if (ViewData.ModelState.GetFieldValidationState("sexo_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid)
+                        {
+                            <i class="fa fa-exclamation-circle warning-icono" style="color: #BB0F2A "></i>
+                        }
+                    </div>
+                    <span asp-validation-for="sexo_registro" class="mensaje-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="quitarEspacio" for="edad_registro">Edad</label>
+                    <div class="div-campo-entrada">
+                        <input value="@(!ViewData.ModelState.IsValid ? Model.edad_registro.ToString() : "")" type="number" class="form-control @(ViewData.ModelState.GetFieldValidationState("edad_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid ? "campo-incorrecto" : " ")" id="edad_registro" asp-for="edad_registro" placeholder="Edad">
+                        @if (ViewData.ModelState.GetFieldValidationState("edad_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid)
+                        {
+                            <i class="fa fa-exclamation-circle warning-icono" style="color: #BB0F2A "></i>
+                        }
+                    </div>
+                    <span asp-validation-for="edad_registro" class="mensaje-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="quitarEspacio" for="estado_registro">Estado</label>
+                    <div class="div-campo-entrada">
+                        <select class="form-control @(ViewData.ModelState.GetFieldValidationState("estado_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid ? "campo-incorrecto" : " ")" asp-for="estado_registro" id="estado_registro">
+                            <option value="">Selecciona tu estado</option>
+                            <option value="Aguascalientes">Aguascalientes</option>
+                            <option value="Baja California">Baja California</option>
+                            <option value="Baja California Sur">Baja California Sur</option>
+                            <option value="Campeche">Campeche</option>
+                            <option value="Chiapas">Chiapas</option>
+                            <option value="Chihuahua">Chihuahua</option>
+                            <option value="Ciudad de México">Ciudad de México</option>
+                            <option value="Coahuila">Coahuila</option>
+                            <option value="Colima">Colima</option>
+                            <option value="Durango">Durango</option>
+                            <option value="Estado de México">Estado de México</option>
+                            <option value="Guanajuato">Guanajuato</option>
+                            <option value="Guerrero">Guerrero</option>
+                            <option value="Hidalgo">Hidalgo</option>
+                            <option value="Jalisco">Jalisco</option>
+                            <option value="Michoacán">Michoacán</option>
+                            <option value="Morelos">Morelos</option>
+                            <option value="Nayarit">Nayarit</option>
+                            <option value="Nuevo León">Nuevo León</option>
+                            <option value="Oaxaca">Oaxaca</option>
+                            <option value="Puebla">Puebla</option>
+                            <option value="Querétaro">Querétaro</option>
+                            <option value="Quintana Roo">Quintana Roo</option>
+                            <option value="San Luis Potosí">San Luis Potosí</option>
+                            <option value="Sinaloa">Sinaloa</option>
+                            <option value="Sonora">Sonora</option>
+                            <option value="Tabasco">Tabasco</option>
+                            <option value="Tamaulipas">Tamaulipas</option>
+                            <option value="Tlaxcala">Tlaxcala</option>
+                            <option value="Veracruz">Veracruz</option>
+                            <option value="Yucatán">Yucatán</option>
+                            <option value="Zacatecas">Zacatecas</option>
+                        </select>
+                        @if (ViewData.ModelState.GetFieldValidationState("estado_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid)
+                        {
+                            <i class="fa fa-exclamation-circle warning-icono" style="color: #BB0F2A "></i>
+                        }
+                    </div>
+                    <span asp-validation-for="estado_registro" class="mensaje-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="quitarEspacio" for="correo_registro">Correo</label>
+                    <div class="div-campo-entrada">
+                        <input type="text" class="form-control @(ViewData.ModelState.GetFieldValidationState("correo_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid ? "campo-incorrecto" : " ")" id="correo_registro" asp-for="correo_registro" placeholder="Introduce tu correo electrónico">
+                        @if (ViewData.ModelState.GetFieldValidationState("correo_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid)
+                        {
+                            <i class="fa fa-exclamation-circle warning-icono" style="color: #BB0F2A "></i>
+                        }
+                    </div>
+                    <span asp-validation-for="correo_registro" class="mensaje-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="quitarEspacio" for="telefono_registro">Teléfono</label>
+                    <div class="div-campo-entrada">
+                        <input type="text" class="form-control @(ViewData.ModelState.GetFieldValidationState("telefono_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid ? "campo-incorrecto" : " ")" id="telefono_registro" asp-for="telefono_registro" placeholder="Introduce tu número telefónico">
+                        @if (ViewData.ModelState.GetFieldValidationState("telefono_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid)
+                        {
+                            <i class="fa fa-exclamation-circle warning-icono" style="color: #BB0F2A "></i>
+                        }
+                    </div>
+                    <span asp-validation-for="telefono_registro" class="mensaje-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="quitarEspacio" for="contrasena_registro">Contraseña</label>
+                    <div class="div-campo-entrada">
+                        <input type="password" class="form-control @(ViewData.ModelState.GetFieldValidationState("contrasena_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid ? "campo-incorrecto" : " ")" id="contrasena_registro" asp-for="contrasena_registro" placeholder="Introduce una contraseña" value="@(!ViewData.ModelState.IsValid ? Model.contrasena_registro : null)">
+                        @if (ViewData.ModelState.GetFieldValidationState("contrasena_registro") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid)
+                        {
+                            <i class="fa fa-exclamation-circle warning-icono" style="color: #BB0F2A "></i>
+                        }
+                    </div>
+                    <span asp-validation-for="contrasena_registro" class="mensaje-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="quitarEspacio" for="contrasena_registro_confirm">Confirmar contraseña</label>
+                    <div class="div-campo-entrada">
+                        <input type="password" class="form-control @(ViewData.ModelState.GetFieldValidationState("contrasena_registro_confirm") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid ? "campo-incorrecto" : " ")" id="contrasena_registro_confirm" asp-for="contrasena_registro_confirm" placeholder="Confirma tu contraseña">
+                        @if (ViewData.ModelState.GetFieldValidationState("contrasena_registro_confirm") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid)
+                        {
+                            <i class="fa fa-exclamation-circle warning-icono" style="color: #BB0F2A "></i>
+                        }
+                    </div>
+                    <span asp-validation-for="contrasena_registro_confirm" class="mensaje-error"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="texto-checkbox">
+                    <input type="checkbox" id="confirmacion_terminos" asp-for="confirmacion_terminos">
+                    <label for="confirmacion_terminos" style="margin:0">
+                        <a href="https://www.sorteostec.org/tc-aviso-privacidad">He leído y acepto los términos y condiciones y políticas de privacidad</a>
+                    </label>
+                </div>
+                <span asp-validation-for="confirmacion_terminos" class="mensaje-error-checkbox"> </span>
+            </div>
+
+            <div class="text-center">
+                <p class="text-danger">@ViewData["Resultado"]</p>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-custom btn-block">Crear cuenta</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="img-container col-md-6">
+        <img src="/images/formulario.jpeg" alt="Descripción de la imagen" class="img-fluid img-formulario">
+    </div>
+</div>
