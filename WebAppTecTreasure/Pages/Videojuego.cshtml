@@ -10,24 +10,24 @@
 </head>
 
 <div id="unity-container" class="unity-desktop">
-    <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
-    <div id="unity-loading-bar">
+  <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
+  <div id="unity-loading-bar">
     <div id="unity-logo"></div>
     <div id="unity-progress-bar-empty">
-        <div id="unity-progress-bar-full"></div>
+      <div id="unity-progress-bar-full"></div>
     </div>
-    </div>
-    <div id="unity-warning"> </div>
-    <div id="unity-footer">
+  </div>
+  <div id="unity-warning"> </div>
+  <div id="unity-footer">
     <div id="unity-webgl-logo"></div>
     <div id="unity-fullscreen-button"></div>
     <div id="unity-build-title">TecTreasure</div>
-    </div>
+  </div>
 </div>
 
 <script>
 
-      var container = document.querySelector("#unity-container");
+var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
       var progressBarFull = document.querySelector("#unity-progress-bar-full");
@@ -59,11 +59,11 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/game3.loader.js";
+      var loaderUrl = buildUrl + "/game.loader.js";
       var config = {
-        dataUrl: buildUrl + "/game3.data",
-        frameworkUrl: buildUrl + "/game3.framework.js",
-        codeUrl: buildUrl + "/game3.wasm",
+        dataUrl: buildUrl + "/game.data",
+        frameworkUrl: buildUrl + "/game.framework.js",
+        codeUrl: buildUrl + "/game.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "TecTreasure",
