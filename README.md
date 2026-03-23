@@ -1,8 +1,5 @@
 # TecTreasure
 
-TODO
-Upload game files (above 20 MB)
-
 Web-based game developed for Sorteos Tec to attract new customers and enhance engagement with existing ones.
 
 Steps for use:
@@ -10,6 +7,6 @@ Steps for use:
 - Inside the ServiceREST directory, in the UsuariosController.cs file in Controllers, add the password to your local server in the connection string
 - Run the API using dotnet run
 2. Web App
-- Download the images from this google drive link and store them in WebAppTecTreasure/wwwroot/images
-https://drive.google.com/file/d/1bG20-_m-wkedV9bDz87n5z5soo8tj4cF/view?usp=sharing
+- Download the zip files from this google drive and decompress them. Store the images folder in WebAppTecTreasure/wwwroot/images and the Build folder in WebAppTecTreasure/wwwroot
+https://drive.google.com/drive/folders/1XM-jXpiABkaTo2rk64XCLJYkoMudgnCy?usp=sharing
 - Inside the WebAppTecTreasure directory, run dotnet run
